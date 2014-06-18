@@ -1,5 +1,14 @@
 /dist
 /build
+/target
+/bin
 .DS_Store
 .gitignore~
 .DS_Store
+.nb-gradle/private/
+.gradle
+/nbproject
+.settings
+.classpath
+.project
+
