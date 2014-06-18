@@ -20,7 +20,6 @@
 
 package cz.advel.stack.instrument;
 
-import cz.advel.stack.Stack;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -31,9 +30,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
+
 import org.objectweb.asm.ClassReader;
 import org.objectweb.asm.ClassWriter;
 import org.objectweb.asm.Type;
+
+import cz.advel.stack.Stack;
 
 /**
  *

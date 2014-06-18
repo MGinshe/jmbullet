@@ -23,12 +23,14 @@
 
 package com.bulletphysics.collision.shapes;
 
+import javax.vecmath.Vector3f;
+
 import com.bulletphysics.collision.broadphase.BroadphaseNativeType;
 import com.bulletphysics.linearmath.Transform;
 import com.bulletphysics.linearmath.TransformUtil;
 import com.bulletphysics.linearmath.VectorUtil;
+
 import cz.advel.stack.Stack;
-import javax.vecmath.Vector3f;
 
 /**
  * StaticPlaneShape simulates an infinite non-moving (static) collision plane.
@@ -79,8 +81,6 @@ public class StaticPlaneShape extends ConcaveShape {
 
 		// tangentDir0/tangentDir1 can be precalculated
 		TransformUtil.planeSpace1(planeNormal, tangentDir0, tangentDir1);
-
-		Vector3f supVertex0 = Stack.alloc(Vector3f.class), supVertex1 = Stack.alloc(Vector3f.class);
 
 		Vector3f projectedCenter = Stack.alloc(Vector3f.class);
 		tmp.scale(planeNormal.dot(center) - planeConstant, planeNormal);

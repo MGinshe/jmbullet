@@ -23,12 +23,14 @@
 
 package com.bulletphysics.linearmath;
 
-import com.bulletphysics.BulletGlobals;
-import cz.advel.stack.Stack;
-import cz.advel.stack.StaticAlloc;
 import javax.vecmath.Matrix3f;
 import javax.vecmath.Quat4f;
 import javax.vecmath.Vector3f;
+
+import com.bulletphysics.BulletGlobals;
+
+import cz.advel.stack.Stack;
+import cz.advel.stack.StaticAlloc;
 
 /**
  * Utility functions for transforms.

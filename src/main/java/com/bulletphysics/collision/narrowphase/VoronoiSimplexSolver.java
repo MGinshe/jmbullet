@@ -23,11 +23,13 @@
 
 package com.bulletphysics.collision.narrowphase;
 
-import com.bulletphysics.util.ObjectPool;
+import javax.vecmath.Vector3f;
+
 import com.bulletphysics.linearmath.VectorUtil;
+import com.bulletphysics.util.ObjectPool;
+
 import cz.advel.stack.Stack;
 import cz.advel.stack.StaticAlloc;
-import javax.vecmath.Vector3f;
 
 /**
  * VoronoiSimplexSolver is an implementation of the closest point distance algorithm
@@ -46,7 +48,6 @@ public class VoronoiSimplexSolver extends SimplexSolverInterface {
 	private static final int VERTA = 0;
 	private static final int VERTB = 1;
 	private static final int VERTC = 2;
-	private static final int VERTD = 3;
 
 	public int numVertices;
 

@@ -23,6 +23,8 @@
 
 package com.bulletphysics.dynamics.character;
 
+import javax.vecmath.Vector3f;
+
 import com.bulletphysics.BulletGlobals;
 import com.bulletphysics.collision.broadphase.BroadphasePair;
 import com.bulletphysics.collision.dispatch.CollisionObject;
@@ -36,8 +38,8 @@ import com.bulletphysics.dynamics.ActionInterface;
 import com.bulletphysics.linearmath.IDebugDraw;
 import com.bulletphysics.linearmath.Transform;
 import com.bulletphysics.util.ObjectArrayList;
+
 import cz.advel.stack.Stack;
-import javax.vecmath.Vector3f;
 
 /**
  * KinematicCharacterController is an object that supports a sliding motion in
@@ -476,17 +478,17 @@ public class KinematicCharacterController extends ActionInterface {
 			Vector3f reflectDir = computeReflectionDirection(movementDirection, hitNormal, Stack.alloc(Vector3f.class));
 			reflectDir.normalize();
 
-			Vector3f parallelDir = parallelComponent(reflectDir, hitNormal, Stack.alloc(Vector3f.class));
+//			Vector3f parallelDir = parallelComponent(reflectDir, hitNormal, Stack.alloc(Vector3f.class));
 			Vector3f perpindicularDir = perpindicularComponent(reflectDir, hitNormal, Stack.alloc(Vector3f.class));
 
 			targetPosition.set(currentPosition);
-			if (false) //tangentMag != 0.0)
-			{
-				Vector3f parComponent = Stack.alloc(Vector3f.class);
-				parComponent.scale(tangentMag * movementLength, parallelDir);
-				//printf("parComponent=%f,%f,%f\n",parComponent[0],parComponent[1],parComponent[2]);
-				targetPosition.add(parComponent);
-			}
+//			if (false) //tangentMag != 0.0)
+//			{
+//				Vector3f parComponent = Stack.alloc(Vector3f.class);
+//				parComponent.scale(tangentMag * movementLength, parallelDir);
+//				//printf("parComponent=%f,%f,%f\n",parComponent[0],parComponent[1],parComponent[2]);
+//				targetPosition.add(parComponent);
+//			}
 
 			if (normalMag != 0.0f) {
 				Vector3f perpComponent = Stack.alloc(Vector3f.class);
@@ -630,23 +632,23 @@ public class KinematicCharacterController extends ActionInterface {
 
 	////////////////////////////////////////////////////////////////////////////
 
-	private static class KinematicClosestNotMeRayResultCallback extends CollisionWorld.ClosestRayResultCallback {
-		protected CollisionObject me;
-
-		public KinematicClosestNotMeRayResultCallback(CollisionObject me) {
-			super(new Vector3f(), new Vector3f());
-			this.me = me;
-		}
-
-		@Override
-		public float addSingleResult(CollisionWorld.LocalRayResult rayResult, boolean normalInWorldSpace) {
-			if (rayResult.collisionObject == me) {
-				return 1.0f;
-			}
-
-			return super.addSingleResult(rayResult, normalInWorldSpace);
-		}
-	}
+//	private static class KinematicClosestNotMeRayResultCallback extends CollisionWorld.ClosestRayResultCallback {
+//		protected CollisionObject me;
+//
+//		public KinematicClosestNotMeRayResultCallback(CollisionObject me) {
+//			super(new Vector3f(), new Vector3f());
+//			this.me = me;
+//		}
+//
+//		@Override
+//		public float addSingleResult(CollisionWorld.LocalRayResult rayResult, boolean normalInWorldSpace) {
+//			if (rayResult.collisionObject == me) {
+//				return 1.0f;
+//			}
+//
+//			return super.addSingleResult(rayResult, normalInWorldSpace);
+//		}
+//	}
 
 	////////////////////////////////////////////////////////////////////////////
 

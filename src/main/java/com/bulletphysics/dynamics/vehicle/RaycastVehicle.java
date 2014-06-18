@@ -23,6 +23,10 @@
 
 package com.bulletphysics.dynamics.vehicle;
 
+import javax.vecmath.Matrix3f;
+import javax.vecmath.Quat4f;
+import javax.vecmath.Vector3f;
+
 import com.bulletphysics.dynamics.RigidBody;
 import com.bulletphysics.dynamics.constraintsolver.ContactConstraint;
 import com.bulletphysics.dynamics.constraintsolver.TypedConstraint;
@@ -34,10 +38,8 @@ import com.bulletphysics.linearmath.Transform;
 import com.bulletphysics.util.ArrayPool;
 import com.bulletphysics.util.FloatArrayList;
 import com.bulletphysics.util.ObjectArrayList;
+
 import cz.advel.stack.Stack;
-import javax.vecmath.Matrix3f;
-import javax.vecmath.Quat4f;
-import javax.vecmath.Vector3f;
 
 /**
  * Raycast vehicle, very special constraint that turn a rigidbody into a vehicle.
@@ -56,11 +58,7 @@ public class RaycastVehicle extends TypedConstraint {
 	protected FloatArrayList forwardImpulse = new FloatArrayList();
 	protected FloatArrayList sideImpulse = new FloatArrayList();
 
-	private float tau;
-	private float damping;
 	private VehicleRaycaster vehicleRaycaster;
-	private float pitchControl = 0f;
-	private float steeringValue; 
 	private float currentVehicleSpeedKmHour;
 
 	private RigidBody chassisBody;
@@ -81,7 +79,6 @@ public class RaycastVehicle extends TypedConstraint {
 	
 	private void defaultInit(VehicleTuning tuning) {
 		currentVehicleSpeedKmHour = 0f;
-		steeringValue = 0f;
 	}
 
 	/**
@@ -313,8 +310,7 @@ public class RaycastVehicle extends TypedConstraint {
 
 		int i = 0;
 		for (i = 0; i < wheelInfo.size(); i++) {
-			float depth;
-			depth = rayCast(wheelInfo.getQuick(i));
+			rayCast(wheelInfo.getQuick(i));
 		}
 
 		updateSuspension(step);
@@ -488,15 +484,8 @@ public class RaycastVehicle extends TypedConstraint {
 
 		Vector3f tmp = Stack.alloc(Vector3f.class);
 
-		int numWheelsOnGround = 0;
-
 		// collapse all those loops into one!
 		for (int i = 0; i < getNumWheels(); i++) {
-			WheelInfo wheel_info = wheelInfo.getQuick(i);
-			RigidBody groundObject = (RigidBody) wheel_info.raycastInfo.groundObject;
-			if (groundObject != null) {
-				numWheelsOnGround++;
-			}
 			sideImpulse.set(i, 0f);
 			forwardImpulse.set(i, 0f);
 		}
@@ -651,9 +640,9 @@ public class RaycastVehicle extends TypedConstraint {
 		return wheelInfo.size();
 	}
 
-	public void setPitchControl(float pitch) {
-		this.pitchControl = pitch;
-	}
+//	public void setPitchControl(float pitch) {
+//		this.pitchControl = pitch;
+//	}
 
 	public RigidBody getRigidBody() {
 		return chassisBody;

@@ -23,15 +23,16 @@
 
 package com.bulletphysics.collision.dispatch;
 
-import com.bulletphysics.collision.narrowphase.PersistentManifold;
 import com.bulletphysics.collision.broadphase.CollisionAlgorithm;
 import com.bulletphysics.collision.broadphase.CollisionAlgorithmConstructionInfo;
 import com.bulletphysics.collision.broadphase.DispatcherInfo;
+import com.bulletphysics.collision.narrowphase.PersistentManifold;
 import com.bulletphysics.collision.shapes.CollisionShape;
 import com.bulletphysics.collision.shapes.CompoundShape;
 import com.bulletphysics.linearmath.Transform;
 import com.bulletphysics.util.ObjectArrayList;
 import com.bulletphysics.util.ObjectPool;
+
 import cz.advel.stack.Stack;
 
 /**
@@ -93,7 +94,6 @@ public class CompoundCollisionAlgorithm extends CollisionAlgorithm {
 		// then use each overlapping node AABB against Tree0
 		// and vise versa.
 
-		Transform tmpTrans = Stack.alloc(Transform.class);
 		Transform orgTrans = Stack.alloc(Transform.class);
 		Transform childTrans = Stack.alloc(Transform.class);
 		Transform orgInterpolationTrans = Stack.alloc(Transform.class);

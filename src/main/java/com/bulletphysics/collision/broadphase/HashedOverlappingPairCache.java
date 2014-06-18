@@ -24,7 +24,6 @@
 package com.bulletphysics.collision.broadphase;
 
 import com.bulletphysics.BulletStats;
-import com.bulletphysics.util.ObjectPool;
 import com.bulletphysics.linearmath.MiscUtil;
 import com.bulletphysics.util.IntArrayList;
 import com.bulletphysics.util.ObjectArrayList;
@@ -36,21 +35,17 @@ import com.bulletphysics.util.ObjectArrayList;
  */
 public class HashedOverlappingPairCache extends OverlappingPairCache {
 
-	private final ObjectPool<BroadphasePair> pairsPool = ObjectPool.get(BroadphasePair.class);
-	
 	private static final int NULL_PAIR = 0xffffffff;
 	
 	private ObjectArrayList<BroadphasePair> overlappingPairArray = new ObjectArrayList<BroadphasePair>();
 	private OverlapFilterCallback overlapFilterCallback;
-	private boolean blockedForChanges = false;
 	
 	private IntArrayList hashTable = new IntArrayList();
 	private IntArrayList next = new IntArrayList();
 	protected OverlappingPairCallback ghostPairCallback;
 
 	public HashedOverlappingPairCache() {
-		int initialAllocatedSize = 2;
-		// JAVA TODO: overlappingPairArray.ensureCapacity(initialAllocatedSize);
+		// JAVA TODO: overlappingPairArray.ensureCapacity(2);
 		growTables();
 	}
 
@@ -227,7 +222,7 @@ public class HashedOverlappingPairCache extends OverlappingPairCache {
 		if (proxy0.getUid() > proxy1.getUid()) {
 			BroadphaseProxy tmp = proxy0;
 			proxy0 = proxy1;
-			proxy1 = proxy0;
+			proxy1 = tmp;
 		}
 		int proxyId1 = proxy0.getUid();
 		int proxyId2 = proxy1.getUid();

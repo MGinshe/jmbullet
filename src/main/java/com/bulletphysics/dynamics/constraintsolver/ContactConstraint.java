@@ -23,14 +23,16 @@
 
 package com.bulletphysics.dynamics.constraintsolver;
 
+import javax.vecmath.Matrix3f;
+import javax.vecmath.Vector3f;
+
 import com.bulletphysics.BulletGlobals;
-import com.bulletphysics.util.ObjectPool;
 import com.bulletphysics.collision.narrowphase.ManifoldPoint;
 import com.bulletphysics.dynamics.RigidBody;
 import com.bulletphysics.linearmath.Transform;
+import com.bulletphysics.util.ObjectPool;
+
 import cz.advel.stack.Stack;
-import javax.vecmath.Matrix3f;
-import javax.vecmath.Vector3f;
 
 /**
  * Functions for resolving contacts.
@@ -118,10 +120,6 @@ public class ContactConstraint {
 				tmp2);
 
 		jacobiansPool.release(jac);
-
-		float a;
-		a = jacDiagABInv;
-
 
 		rel_vel = normal.dot(vel);
 

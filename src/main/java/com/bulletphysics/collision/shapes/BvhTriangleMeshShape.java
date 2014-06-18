@@ -23,12 +23,14 @@
 
 package com.bulletphysics.collision.shapes;
 
+import javax.vecmath.Vector3f;
+
 import com.bulletphysics.BulletGlobals;
-import com.bulletphysics.util.ObjectPool;
 import com.bulletphysics.collision.broadphase.BroadphaseNativeType;
 import com.bulletphysics.linearmath.VectorUtil;
+import com.bulletphysics.util.ObjectPool;
+
 import cz.advel.stack.Stack;
-import javax.vecmath.Vector3f;
 
 /**
  * BvhTriangleMeshShape is a static-triangle mesh shape with several optimizations,

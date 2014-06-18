@@ -25,14 +25,16 @@
 
 package com.bulletphysics.linearmath.convexhull;
 
+import javax.vecmath.Vector3f;
+
 import com.bulletphysics.BulletGlobals;
 import com.bulletphysics.collision.shapes.ShapeHull;
 import com.bulletphysics.linearmath.MiscUtil;
 import com.bulletphysics.linearmath.VectorUtil;
 import com.bulletphysics.util.IntArrayList;
 import com.bulletphysics.util.ObjectArrayList;
+
 import cz.advel.stack.Stack;
-import javax.vecmath.Vector3f;
 
 /**
  * HullLibrary class can create a convex hull from a collection of vertices, using
@@ -345,7 +347,6 @@ public class HullLibrary {
 		Tri te;
 		vlimit -= 4;
 		while (vlimit > 0 && ((te = extrudable(epsilon)) != null)) {
-			Int3 ti = te;
 			int v = te.vmax;
 			assert (v != -1);
 			assert (isextreme.get(v) == 0);  // wtf we've already done this vertex

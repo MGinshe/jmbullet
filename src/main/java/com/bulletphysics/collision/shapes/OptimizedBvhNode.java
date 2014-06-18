@@ -24,6 +24,7 @@
 package com.bulletphysics.collision.shapes;
 
 import java.io.Serializable;
+
 import javax.vecmath.Vector3f;
 
 /**

@@ -23,10 +23,11 @@
 
 package com.bulletphysics.dynamics.constraintsolver;
 
+import javax.vecmath.Matrix3f;
+import javax.vecmath.Vector3f;
+
 import com.bulletphysics.BulletGlobals;
 import com.bulletphysics.BulletStats;
-import com.bulletphysics.ContactDestroyedCallback;
-import com.bulletphysics.util.ObjectPool;
 import com.bulletphysics.collision.broadphase.Dispatcher;
 import com.bulletphysics.collision.dispatch.CollisionObject;
 import com.bulletphysics.collision.narrowphase.ManifoldPoint;
@@ -38,10 +39,10 @@ import com.bulletphysics.linearmath.Transform;
 import com.bulletphysics.linearmath.TransformUtil;
 import com.bulletphysics.util.IntArrayList;
 import com.bulletphysics.util.ObjectArrayList;
+import com.bulletphysics.util.ObjectPool;
+
 import cz.advel.stack.Stack;
 import cz.advel.stack.StaticAlloc;
-import javax.vecmath.Matrix3f;
-import javax.vecmath.Vector3f;
 
 /**
  * SequentialImpulseConstraintSolver uses a Propagation Method and Sequentially applies impulses.
@@ -60,8 +61,6 @@ public class SequentialImpulseConstraintSolver extends ConstraintSolver {
 
 	private static final int SEQUENTIAL_IMPULSE_MAX_SOLVER_POINTS = 16384;
 	private OrderIndex[] gOrder = new OrderIndex[SEQUENTIAL_IMPULSE_MAX_SOLVER_POINTS];
-	
-	private int totalCpd = 0;
 	
 	{
 		for (int i=0; i<gOrder.length; i++) {
@@ -88,16 +87,12 @@ public class SequentialImpulseConstraintSolver extends ConstraintSolver {
 	protected long btSeed2 = 0L;
 
 	public SequentialImpulseConstraintSolver() {
-		BulletGlobals.setContactDestroyedCallback(new ContactDestroyedCallback() {
-			public boolean contactDestroyed(Object userPersistentData) {
-				assert (userPersistentData != null);
-				ConstraintPersistentData cpd = (ConstraintPersistentData) userPersistentData;
-				//btAlignedFree(cpd);
-				totalCpd--;
-				//printf("totalCpd = %i. DELETED Ptr %x\n",totalCpd,userPersistentData);
-				return true;
-			}
-		});
+//		BulletGlobals.setContactDestroyedCallback(new ContactDestroyedCallback() {
+//			public boolean contactDestroyed(Object userPersistentData) {
+//				assert (userPersistentData != null);
+//				return true;
+//			}
+//		});
 
 		// initialize default friction/contact funcs
 		int i, j;
@@ -496,8 +491,6 @@ public class SequentialImpulseConstraintSolver extends ConstraintSolver {
 					Vector3f torqueAxis1 = Stack.alloc(Vector3f.class);
 					Vector3f vel1 = Stack.alloc(Vector3f.class);
 					Vector3f vel2 = Stack.alloc(Vector3f.class);
-					Vector3f frictionDir1 = Stack.alloc(Vector3f.class);
-					Vector3f frictionDir2 = Stack.alloc(Vector3f.class);
 					Vector3f vec = Stack.alloc(Vector3f.class);
 
 					Matrix3f tmpMat = Stack.alloc(Matrix3f.class);
@@ -1112,7 +1105,6 @@ public class SequentialImpulseConstraintSolver extends ConstraintSolver {
 						cpd = new ConstraintPersistentData();
 						//assert(cpd != null);
 
-						totalCpd++;
 						//printf("totalCpd = %i Created Ptr %x\n",totalCpd,cpd);
 						cp.userPersistentData = cpd;
 						cpd.persistentLifeTime = cp.getLifeTime();

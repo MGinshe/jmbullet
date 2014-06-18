@@ -23,6 +23,8 @@
 
 package com.bulletphysics.dynamics;
 
+import javax.vecmath.Vector3f;
+
 import com.bulletphysics.collision.broadphase.BroadphaseInterface;
 import com.bulletphysics.collision.broadphase.Dispatcher;
 import com.bulletphysics.collision.broadphase.DispatcherInfo;
@@ -34,8 +36,8 @@ import com.bulletphysics.dynamics.constraintsolver.ConstraintSolver;
 import com.bulletphysics.dynamics.constraintsolver.ContactSolverInfo;
 import com.bulletphysics.linearmath.Transform;
 import com.bulletphysics.util.ObjectArrayList;
+
 import cz.advel.stack.Stack;
-import javax.vecmath.Vector3f;
 
 /**
  * SimpleDynamicsWorld serves as unit-test and to verify more complicated and
@@ -178,7 +180,6 @@ public class SimpleDynamicsWorld extends DynamicsWorld {
 	@Override
 	public void updateAabbs() {
 		Transform tmpTrans = Stack.alloc(Transform.class);
-		Transform predictedTrans = Stack.alloc(Transform.class);
 		Vector3f minAabb = Stack.alloc(Vector3f.class), maxAabb = Stack.alloc(Vector3f.class);
 
 		for (int i = 0; i < collisionObjects.size(); i++) {

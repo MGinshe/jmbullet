@@ -30,18 +30,17 @@ http://gimpact.sf.net
 
 package com.bulletphysics.dynamics.constraintsolver;
 
+import javax.vecmath.Matrix3f;
+import javax.vecmath.Vector3f;
+
 import com.bulletphysics.BulletGlobals;
 import com.bulletphysics.dynamics.RigidBody;
 import com.bulletphysics.linearmath.MatrixUtil;
 import com.bulletphysics.linearmath.Transform;
-
-
-/// 
-import com.bulletphysics.linearmath.TransformUtil;
 import com.bulletphysics.linearmath.VectorUtil;
+
 import cz.advel.stack.Stack;
-import javax.vecmath.Matrix3f;
-import javax.vecmath.Vector3f;
+/// 
 /*!
 
 */
@@ -333,8 +332,6 @@ public class Generic6DofConstraint extends TypedConstraint {
 		// calculates transform
 		calculateTransforms();
 		
-		Vector3f tmpVec = Stack.alloc(Vector3f.class);
-
 		//  const btVector3& pivotAInW = m_calculatedTransformA.getOrigin();
 		//  const btVector3& pivotBInW = m_calculatedTransformB.getOrigin();
 		calcAnchorPos();

@@ -23,8 +23,9 @@
 
 package com.bulletphysics.collision.broadphase;
 
-import com.bulletphysics.util.ObjectArrayList;
 import javax.vecmath.Vector3f;
+
+import com.bulletphysics.util.ObjectArrayList;
 
 /**
  * SimpleBroadphase is just a unit-test for {@link AxisSweep3}, {@link AxisSweep3_32},
@@ -36,9 +37,7 @@ import javax.vecmath.Vector3f;
 public class SimpleBroadphase extends BroadphaseInterface {
 
 	private final ObjectArrayList<SimpleBroadphaseProxy> handles = new ObjectArrayList<SimpleBroadphaseProxy>();
-	private int maxHandles;						// max number of handles
 	private OverlappingPairCache pairCache;
-	private boolean ownsPairCache;
 
 	public SimpleBroadphase() {
 		this(16384, null);
@@ -53,7 +52,6 @@ public class SimpleBroadphase extends BroadphaseInterface {
 
 		if (overlappingPairCache == null) {
 			pairCache = new HashedOverlappingPairCache();
-			ownsPairCache = true;
 		}
 	}
 

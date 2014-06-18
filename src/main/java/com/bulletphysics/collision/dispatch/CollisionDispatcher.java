@@ -24,7 +24,7 @@
 package com.bulletphysics.collision.dispatch;
 
 import java.util.Collections;
-import com.bulletphysics.util.ObjectPool;
+
 import com.bulletphysics.collision.broadphase.BroadphaseNativeType;
 import com.bulletphysics.collision.broadphase.BroadphasePair;
 import com.bulletphysics.collision.broadphase.CollisionAlgorithm;
@@ -35,6 +35,7 @@ import com.bulletphysics.collision.broadphase.OverlapCallback;
 import com.bulletphysics.collision.broadphase.OverlappingPairCache;
 import com.bulletphysics.collision.narrowphase.PersistentManifold;
 import com.bulletphysics.util.ObjectArrayList;
+import com.bulletphysics.util.ObjectPool;
 
 /**
  * CollisionDispatcher supports algorithms that handle ConvexConvex and ConvexConcave collision pairs.
@@ -47,11 +48,8 @@ public class CollisionDispatcher extends Dispatcher {
 	protected final ObjectPool<PersistentManifold> manifoldsPool = ObjectPool.get(PersistentManifold.class);
 
 	private static final int MAX_BROADPHASE_COLLISION_TYPES = BroadphaseNativeType.MAX_BROADPHASE_COLLISION_TYPES.ordinal();
-	private int count = 0;
 	private final ObjectArrayList<PersistentManifold> manifoldsPtr = new ObjectArrayList<PersistentManifold>();
-	private boolean useIslands = true;
 	private boolean staticWarningReported = false;
-	private ManifoldResult defaultManifoldResult;
 	private NearCallback nearCallback;
 	//private PoolAllocator*	m_collisionAlgorithmPoolAllocator;
 	//private PoolAllocator*	m_persistentManifoldPoolAllocator;

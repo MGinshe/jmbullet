@@ -23,10 +23,12 @@
 
 package com.bulletphysics.linearmath;
 
-import com.bulletphysics.BulletGlobals;
-import cz.advel.stack.Stack;
 import javax.vecmath.Quat4f;
 import javax.vecmath.Vector3f;
+
+import com.bulletphysics.BulletGlobals;
+
+import cz.advel.stack.Stack;
 
 /**
  * Utility functions for quaternions.

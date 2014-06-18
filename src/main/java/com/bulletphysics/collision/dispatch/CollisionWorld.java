@@ -23,6 +23,10 @@
 
 package com.bulletphysics.collision.dispatch;
 
+import javax.vecmath.Matrix3f;
+import javax.vecmath.Quat4f;
+import javax.vecmath.Vector3f;
+
 import com.bulletphysics.BulletGlobals;
 import com.bulletphysics.BulletStats;
 import com.bulletphysics.collision.broadphase.BroadphaseInterface;
@@ -35,7 +39,6 @@ import com.bulletphysics.collision.broadphase.OverlappingPairCache;
 import com.bulletphysics.collision.narrowphase.ConvexCast;
 import com.bulletphysics.collision.narrowphase.ConvexCast.CastResult;
 import com.bulletphysics.collision.narrowphase.GjkConvexCast;
-import com.bulletphysics.collision.narrowphase.GjkEpaPenetrationDepthSolver;
 import com.bulletphysics.collision.narrowphase.SubsimplexConvexCast;
 import com.bulletphysics.collision.narrowphase.TriangleConvexcastCallback;
 import com.bulletphysics.collision.narrowphase.TriangleRaycastCallback;
@@ -53,10 +56,8 @@ import com.bulletphysics.linearmath.Transform;
 import com.bulletphysics.linearmath.TransformUtil;
 import com.bulletphysics.linearmath.VectorUtil;
 import com.bulletphysics.util.ObjectArrayList;
+
 import cz.advel.stack.Stack;
-import javax.vecmath.Matrix3f;
-import javax.vecmath.Quat4f;
-import javax.vecmath.Vector3f;
 
 /**
  * CollisionWorld is interface and container for the collision detection.
@@ -324,7 +325,7 @@ public class CollisionWorld {
 					Vector3f rayToLocal = Stack.alloc(rayToTrans.origin);
 					worldTocollisionObject.transform(rayToLocal);
 
-					BridgeTriangleRaycastCallback rcb = new BridgeTriangleRaycastCallback(rayFromLocal, rayToLocal, resultCallback, collisionObject, triangleMesh);
+					BridgeTriangleRaycastCallback rcb = new BridgeTriangleRaycastCallback(rayFromLocal, rayToLocal, resultCallback, collisionObject);
 					rcb.hitFraction = resultCallback.closestHitFraction;
 					triangleMesh.performRaycast(rcb, rayFromLocal, rayToLocal);
 				}
@@ -339,7 +340,7 @@ public class CollisionWorld {
 					Vector3f rayToLocal = Stack.alloc(rayToTrans.origin);
 					worldTocollisionObject.transform(rayToLocal);
 
-					BridgeTriangleRaycastCallback rcb = new BridgeTriangleRaycastCallback(rayFromLocal, rayToLocal, resultCallback, collisionObject, triangleMesh);
+					BridgeTriangleRaycastCallback rcb = new BridgeTriangleRaycastCallback(rayFromLocal, rayToLocal, resultCallback, collisionObject);
 					rcb.hitFraction = resultCallback.closestHitFraction;
 
 					Vector3f rayAabbMinLocal = Stack.alloc(rayFromLocal);
@@ -380,14 +381,12 @@ public class CollisionWorld {
 	private static class BridgeTriangleConvexcastCallback extends TriangleConvexcastCallback {
 		public ConvexResultCallback resultCallback;
 		public CollisionObject collisionObject;
-		public TriangleMeshShape triangleMesh;
 		public boolean normalInWorldSpace;
 
 		public BridgeTriangleConvexcastCallback(ConvexShape castShape, Transform from, Transform to, ConvexResultCallback resultCallback, CollisionObject collisionObject, TriangleMeshShape triangleMesh, Transform triangleToWorld) {
 			super(castShape, from, to, triangleToWorld, triangleMesh.getMargin());
 			this.resultCallback = resultCallback;
 			this.collisionObject = collisionObject;
-			this.triangleMesh = triangleMesh;
 		}
 
 		@Override
@@ -414,7 +413,6 @@ public class CollisionWorld {
 
 			ConvexShape convexShape = (ConvexShape) collisionShape;
 			VoronoiSimplexSolver simplexSolver = new VoronoiSimplexSolver();
-			GjkEpaPenetrationDepthSolver gjkEpaPenetrationSolver = new GjkEpaPenetrationDepthSolver();
 
 			// JAVA TODO: should be convexCaster1
 			//ContinuousConvexCollision convexCaster1(castShape,convexShape,&simplexSolver,&gjkEpaPenetrationSolver);
@@ -788,13 +786,11 @@ public class CollisionWorld {
 	private static class BridgeTriangleRaycastCallback extends TriangleRaycastCallback {
 		public RayResultCallback resultCallback;
 		public CollisionObject collisionObject;
-		public ConcaveShape triangleMesh;
 
-		public BridgeTriangleRaycastCallback(Vector3f from, Vector3f to, RayResultCallback resultCallback, CollisionObject collisionObject, ConcaveShape triangleMesh) {
+		public BridgeTriangleRaycastCallback(Vector3f from, Vector3f to, RayResultCallback resultCallback, CollisionObject collisionObject) {
 			super(from, to);
 			this.resultCallback = resultCallback;
 			this.collisionObject = collisionObject;
-			this.triangleMesh = triangleMesh;
 		}
 	
 		public float reportHit(Vector3f hitNormalLocal, float hitFraction, int partId, int triangleIndex) {

@@ -23,13 +23,15 @@
 
 package com.bulletphysics.collision.narrowphase;
 
+import javax.vecmath.Vector3f;
+
 import com.bulletphysics.BulletGlobals;
 import com.bulletphysics.collision.shapes.ConvexShape;
 import com.bulletphysics.linearmath.MatrixUtil;
 import com.bulletphysics.linearmath.Transform;
 import com.bulletphysics.linearmath.VectorUtil;
+
 import cz.advel.stack.Stack;
-import javax.vecmath.Vector3f;
 
 /**
  * SubsimplexConvexCast implements Gino van den Bergens' paper
@@ -99,10 +101,6 @@ public class SubsimplexConvexCast extends ConvexCast {
 
 		Vector3f n = Stack.alloc(Vector3f.class);
 		n.set(0f, 0f, 0f);
-		boolean hasResult = false;
-		Vector3f c = Stack.alloc(Vector3f.class);
-
-		float lastLambda = lambda;
 
 		float dist2 = v.lengthSquared();
 		//#ifdef BT_USE_DOUBLE_PRECISION
@@ -110,7 +108,7 @@ public class SubsimplexConvexCast extends ConvexCast {
 		//#else
 		float epsilon = 0.0001f;
 		//#endif
-		Vector3f w = Stack.alloc(Vector3f.class), p = Stack.alloc(Vector3f.class);
+		Vector3f w = Stack.alloc(Vector3f.class);
 		float VdotR;
 
 		while ((dist2 > epsilon) && (maxIter--) != 0) {
@@ -147,15 +145,12 @@ public class SubsimplexConvexCast extends ConvexCast {
 					//m_simplexSolver->reset();
 					// check next line
 					w.sub(supVertexA, supVertexB);
-					lastLambda = lambda;
 					n.set(v);
-					hasResult = true;
 				}
 			}
 			simplexSolver.addVertex(w, supVertexA , supVertexB);
 			if (simplexSolver.closest(v)) {
 				dist2 = v.lengthSquared();
-				hasResult = true;
 				// todo: check this normal for validity
 				//n.set(v);
 				//printf("V=%f , %f, %f\n",v[0],v[1],v[2]);

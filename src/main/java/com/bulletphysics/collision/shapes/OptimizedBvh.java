@@ -23,13 +23,16 @@
 
 package com.bulletphysics.collision.shapes;
 
+import java.io.Serializable;
+
+import javax.vecmath.Vector3f;
+
 import com.bulletphysics.linearmath.AabbUtil2;
 import com.bulletphysics.linearmath.MiscUtil;
 import com.bulletphysics.linearmath.VectorUtil;
 import com.bulletphysics.util.ObjectArrayList;
+
 import cz.advel.stack.Stack;
-import java.io.Serializable;
-import javax.vecmath.Vector3f;
 
 // JAVA NOTE: OptimizedBvh still from 2.66, update it for 2.70b1
 
@@ -809,14 +812,11 @@ public class OptimizedBvh implements Serializable {
 		boolean boxBoxOverlap = false;
 		boolean rayBoxOverlap = false;
 
-		float lambda_max = 1f;
 		//#define RAYAABB2
 		//#ifdef RAYAABB2
-		Vector3f rayFrom = Stack.alloc(raySource);
 		Vector3f rayDirection = Stack.alloc(Vector3f.class);
 		tmp.sub(rayTarget, raySource);
 		rayDirection.normalize(tmp);
-		lambda_max = rayDirection.dot(tmp);
 		rayDirection.x = 1f / rayDirection.x;
 		rayDirection.y = 1f / rayDirection.y;
 		rayDirection.z = 1f / rayDirection.z;
