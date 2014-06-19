@@ -49,7 +49,6 @@ import com.bulletphysics.collision.shapes.CompoundShape;
 import com.bulletphysics.collision.shapes.ConcaveShape;
 import com.bulletphysics.collision.shapes.ConvexShape;
 import com.bulletphysics.collision.shapes.SphereShape;
-import com.bulletphysics.collision.shapes.TriangleMeshShape;
 import com.bulletphysics.linearmath.AabbUtil2;
 import com.bulletphysics.linearmath.IDebugDraw;
 import com.bulletphysics.linearmath.Transform;
@@ -383,7 +382,7 @@ public class CollisionWorld {
 		public CollisionObject collisionObject;
 		public boolean normalInWorldSpace;
 
-		public BridgeTriangleConvexcastCallback(ConvexShape castShape, Transform from, Transform to, ConvexResultCallback resultCallback, CollisionObject collisionObject, TriangleMeshShape triangleMesh, Transform triangleToWorld) {
+		public BridgeTriangleConvexcastCallback(ConvexShape castShape, Transform from, Transform to, ConvexResultCallback resultCallback, CollisionObject collisionObject, ConcaveShape triangleMesh, Transform triangleToWorld) {
 			super(castShape, from, to, triangleToWorld, triangleMesh.getMargin());
 			this.resultCallback = resultCallback;
 			this.collisionObject = collisionObject;
@@ -465,7 +464,7 @@ public class CollisionWorld {
 					triangleMesh.performConvexcast(tccb, convexFromLocal, convexToLocal, boxMinLocal, boxMaxLocal);
 				}
 				else {
-					BvhTriangleMeshShape triangleMesh = (BvhTriangleMeshShape)collisionShape;
+					ConcaveShape triangleMesh = (ConcaveShape)collisionShape;
 					Transform worldTocollisionObject = Stack.alloc(Transform.class);
 					worldTocollisionObject.inverse(colObjWorldTransform);
 

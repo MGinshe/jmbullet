@@ -321,9 +321,8 @@ public class RaycastVehicle extends TypedConstraint {
 
 			float suspensionForce = wheel.wheelsSuspensionForce;
 
-			float gMaxSuspensionForce = 6000f;
-			if (suspensionForce > gMaxSuspensionForce) {
-				suspensionForce = gMaxSuspensionForce;
+			if (suspensionForce > wheel.maxSuspensionForce) {
+				suspensionForce = wheel.maxSuspensionForce;
 			}
 			Vector3f impulse = Stack.alloc(Vector3f.class);
 			impulse.scale(suspensionForce * step, wheel.raycastInfo.contactNormalWS);

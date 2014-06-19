@@ -84,6 +84,8 @@ public class DiscreteDynamicsWorld extends DynamicsWorld {
 	protected ObjectArrayList<ActionInterface> actions = new ObjectArrayList<ActionInterface>();
 
 	protected int profileTimings = 0;
+
+	protected InternalTickCallback preTickCallback;
 	
 	public DiscreteDynamicsWorld(Dispatcher dispatcher, BroadphaseInterface pairCache, ConstraintSolver constraintSolver, CollisionConfiguration collisionConfiguration) {
 		super(dispatcher, pairCache, collisionConfiguration);
@@ -358,6 +360,10 @@ public class DiscreteDynamicsWorld extends DynamicsWorld {
 	protected void internalSingleStepSimulation(float timeStep) {
 		BulletStats.pushProfile("internalSingleStepSimulation");
 		try {
+			if (preTickCallback != null) {
+				preTickCallback.internalTick(this, timeStep);
+			}
+
 			// apply gravity, predict motion
 			predictUnconstraintMotion(timeStep);
 
@@ -1058,7 +1064,11 @@ public class DiscreteDynamicsWorld extends DynamicsWorld {
 
 	public void setNumTasks(int numTasks) {
 	}
-	
+
+	public void setPreTickCallback(InternalTickCallback callback){
+		preTickCallback = callback;
+	}
+
 	////////////////////////////////////////////////////////////////////////////
 	
 	private static final Comparator<TypedConstraint> sortConstraintOnIslandPredicate = new Comparator<TypedConstraint>() {
