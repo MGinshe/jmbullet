@@ -859,14 +859,7 @@ public class Dbvt {
 		}
 		return n;
 	}
-	
-	private static Node walkup(Node n, int count) {
-		while (n != null && (count--) != 0) {
-			n = n.parent;
-		}
-		return n;
-	}
-	
+
 	////////////////////////////////////////////////////////////////////////////
 	
 	public static class Node {
