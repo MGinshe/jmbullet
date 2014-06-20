@@ -11,8 +11,6 @@ import com.bulletphysics.linearmath.Transform;
 import com.bulletphysics.linearmath.VectorUtil;
 
 /**
- *
- *
  * Generic 6 DOF constraint that allows to set spring motors to any translational and rotational DOF
  * DOF index used in enableSpring() and setStiffness() means:
  *    0 : translation X
@@ -26,11 +24,15 @@ import com.bulletphysics.linearmath.VectorUtil;
  */
 public class Generic6DofSpringConstraint extends Generic6DofConstraint {
 
-    private boolean springEnabled[] = new boolean[6];
-    private float equilibriumPoint[] = new float[6];
-    private float springStiffness[] = new float[6];
-    private float springDamping[] = new float[6]; // between 0 and 1 (1 == no damping)
+    private final boolean springEnabled[] = new boolean[6];
+    private final float equilibriumPoint[] = new float[6];
+    private final float springStiffness[] = new float[6];
+    private final float springDamping[] = new float[6]; // between 0 and 1 (1 == no damping)
 
+    public Generic6DofSpringConstraint(Generic6DofConstraint c) {
+        this(c.rbA, c.rbB, c.frameInA, c.frameInB, c.useLinearReferenceFrameA);
+    }
+    
     public Generic6DofSpringConstraint(RigidBody rbA, RigidBody rbB, Transform frameInA, Transform frameInB, boolean useLinearReferenceFrameA) {
         super(rbA, rbB, frameInA, frameInB, useLinearReferenceFrameA);
         this.constraintType = TypedConstraintType.D6_SPRING_CONSTRAINT_TYPE;
